@@ -8,9 +8,20 @@ class MinHeap{
 		heap[0] = 1;
 	}
 	
-	public void Insert(String input){} // Uses up heap to keep sorted
+	public void Insert(String input){ // Uses up heap to keep sorted
+		int index = Integer.parseInt(heap[0]);
+		int newIndex = index++;
+		if(newIndex < heap.length()){
+			heap[newIndex] = input;
+		}
+		UpHeap();
+	} 
 	
-	public void Pop(){} // Uses  down heap to keep sorted
+	public String Remove(){ // Uses  down heap to keep sorted
+		int index = Integer.parseInt(heap[0]);
+		String result = heap[1];
+		
+	} 
 	
 	private void DownHeap(){}
 	
