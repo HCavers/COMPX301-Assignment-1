@@ -1,3 +1,6 @@
+//Hunter Cavers: 1288108
+//Sivaram Manoharan: 1299026
+
 class MinHeap{
 	private String[] heap;
 	public MinHeap(int arrayLength){
