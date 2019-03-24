@@ -35,17 +35,17 @@ class MinHeap{
 		
 	}
 	
-	public int GetLeftChild(int parentID)
+	private int GetLeftChild(int parentID)
 	{
 		return parentID * 2;
 	}
 	
-	public int GetRightChild(int parentID)
+	private int GetRightChild(int parentID)
 	{
 		return (parentID * 2) + 1;
 	}
 	
-	public int GetParent(int childID)
+	private int GetParent(int childID)
 	{
 		return childID / 2;
 	}
