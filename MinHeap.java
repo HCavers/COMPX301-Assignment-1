@@ -2,7 +2,7 @@
 //Sivaram Manoharan: 1299026
 
 class MinHeap{
-	private String[] heap;
+	public String[] heap;
 	public MinHeap(int arrayLength){
 		heap = new String[arrayLength];
 		heap[0] = "1";
@@ -15,7 +15,7 @@ class MinHeap{
 		if(newIndex < heap.length){
 			heap[newIndex] = input;
 		}
-		UpHeap();
+		//UpHeap();
 	} 
 	
 	public String Remove()
@@ -30,9 +30,9 @@ class MinHeap{
 		
 	}
 	
-	private void UpHeap()
+	private void UpHeap(int index)
 	{
-		
+		int parentID = GetParent(index);
 	}
 	
 	private int GetLeftChild(int parentID)
@@ -48,5 +48,20 @@ class MinHeap{
 	private int GetParent(int childID)
 	{
 		return childID / 2;
+	}
+	
+	private int GetMin(int index1, int index2)
+	{
+		String text1 = heap[index1];
+		String text2 = heap[index2];
+		int result = text1.compareTo(text2);
+		if(result > 0)
+		{
+			return index2;
+		}
+		else
+		{
+			return index1;
+		}
 	}
 }
