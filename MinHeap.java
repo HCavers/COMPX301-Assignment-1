@@ -90,4 +90,12 @@ class MinHeap{
 		heap[index1] = heap[index2];
 		heap[index2] = temp;
 	}
+	
+	public int GetSmallestChild(int index)
+	{
+		int leftChild = GetLeftChild(index);
+		int rightChild = GetRightChild(index);
+		int smallestChild = GetMin(leftChild, rightChild);
+		return smallestChild;
+	}
 }
