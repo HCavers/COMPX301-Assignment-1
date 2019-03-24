@@ -49,7 +49,8 @@ class MinHeap{
 		}
 		else
 		{
-			
+			SwapValues(index, parentID);
+			UpHeap(parentID);
 		}
 	}
 	
