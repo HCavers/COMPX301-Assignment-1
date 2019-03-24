@@ -8,6 +8,15 @@ class MinHeap{
 		heap[0] = "1";
 	}
 	
+	// ** For testing purposes **
+	public void Print()
+	{
+		for(int i = 0; i < heap.length; i++)
+		{
+			System.out.println(heap[i]);
+		}
+	}
+	
 	public void Insert(String input)
 	{ // Uses up heap to keep sorted
 		int index = Integer.parseInt(heap[0]);
@@ -33,6 +42,15 @@ class MinHeap{
 	private void UpHeap(int index)
 	{
 		int parentID = GetParent(index);
+		int minID = GetMin(index, parentID);
+		if(minID == parentID)
+		{
+			return;
+		}
+		else
+		{
+			
+		}
 	}
 	
 	private int GetLeftChild(int parentID)
@@ -63,5 +81,12 @@ class MinHeap{
 		{
 			return index1;
 		}
+	}
+	
+	private void SwapValues(int index1, int index2)
+	{
+		String temp = heap[index1];
+		heap[index1] = heap[index2];
+		heap[index2] = temp;
 	}
 }
