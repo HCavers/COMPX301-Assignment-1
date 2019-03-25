@@ -3,15 +3,30 @@ import java.util.Arrays;
 
 public class MakeRuns {
 
-    public static void main(String[] args) throws IOException {
-        if (args.length != 2){
-            System.out.println("Usage: java MakeRun [minheapsize] [textfilepath]");
-            System.exit(0);
-        }
+  public static void main(String[] args) throws IOException {
+         if (args.length != 2){
+             System.out.println("Usage: java MakeRun [minheapsize] [textfilepath]");
+             System.exit(0);
+         }
 
-        int size = Integer.parseInt(args[0]);
-        String filePath = args[1];
-    }
+         int size = Integer.parseInt(args[0]);
+         String filePath = args[1];
+
+         int NumLines = LineCount(filePath);
+         String[] LineList= new String[NumLines];
+
+         BufferedReader br = new BufferedReader(new FileReader(filePath));
+         String currLine = br.readLine();
+         int count = 0;
+         while (currLine != null){
+             LineList[count] = currLine;
+             count++;
+             currLine = br.readLine();
+         }
+         int TotalRuns = NumRuns(NumLines,size);
+         System.out.println(TotalRuns);
+         System.out.println(Arrays.toString(LineList)); // For Testing
+     }
 
 
 
