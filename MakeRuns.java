@@ -62,4 +62,10 @@ public static int LineCount(String Path) throws IOException {
           }
           return CurrRun;
     }
+
+    public static void WriteRun(File output, int startIndex, int heapsize, String[] Lines)  throws IOException{
+        String[] Run = CreateRun(startIndex,heapsize,Lines);
+        BufferedWriter bw = new BufferedWriter(new FileWriter(output));
+        bw.write(Arrays.toString(Run));
+    }
 }
