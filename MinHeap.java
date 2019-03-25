@@ -1,9 +1,11 @@
 //Hunter Cavers: 1288108
 //Sivaram Manoharan: 1299026
 
-class MinHeap{
+class MinHeap
+{
 	public String[] heap;
-	public MinHeap(int arrayLength){
+	public MinHeap(int arrayLength)
+	{
 		heap = new String[arrayLength];
 		heap[0] = "1";
 	}
@@ -17,26 +19,43 @@ class MinHeap{
 		}
 	}
 	
-	public void Insert(String input)
+	public void Push(String input)
 	{ // Uses up heap to keep sorted
 		int index = Integer.parseInt(heap[0]);
 		int newIndex = index++;
-		if(newIndex < heap.length){
+		heap[0] = Integer.toString(newIndex);
+		if(newIndex < heap.length)
+		{
 			heap[newIndex] = input;
 		}
-		//UpHeap();
+		UpHeap(index);
 	} 
 	
-	public String Remove()
+	public String Pull()
 	{ // Uses  down heap to keep sorted
 		int index = Integer.parseInt(heap[0]);
 		String result = heap[1];
 		return "";
 	} 
 	
-	private void DownHeap()
+	private void DownHeap(int index)
 	{
 		
+		if(IsLeaf(index))
+		{
+			return;
+		}
+		int smallestChild = GetSmallestChild(index);
+		int minID = GetMin(index, smallestChild);
+		if(minID == index)
+		{
+			return;
+		}
+		else
+		{
+			SwapValues(index, smallestChild);
+			DownHeap(smallestChild);
+		}
 	}
 	
 	private void UpHeap(int index)
@@ -44,6 +63,10 @@ class MinHeap{
 		int parentID = GetParent(index);
 		int minID = GetMin(index, parentID);
 		if(minID == parentID)
+		{
+			return;
+		}
+		else if(index == 1)
 		{
 			return;
 		}
@@ -71,6 +94,7 @@ class MinHeap{
 	
 	private int GetMin(int index1, int index2)
 	{
+		System.out.println(index1);
 		String text1 = heap[index1];
 		String text2 = heap[index2];
 		int result = text1.compareTo(text2);
@@ -91,11 +115,40 @@ class MinHeap{
 		heap[index2] = temp;
 	}
 	
-	public int GetSmallestChild(int index)
+	private int GetSmallestChild(int index)
 	{
 		int leftChild = GetLeftChild(index);
 		int rightChild = GetRightChild(index);
 		int smallestChild = GetMin(leftChild, rightChild);
 		return smallestChild;
+	}
+	
+	private boolean IsLeaf(int index)
+	{
+		int leftChild = GetLeftChild(index);
+		int rightChild = GetRightChild(index);
+		boolean left = ChildExist(leftChild);
+		boolean right = ChildExist(rightChild);
+		if(ChildExist(leftChild) || ChildExist(rightChild))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	private boolean ChildExist(int index)
+	{
+		if(index > heap.length)
+		{
+			return false;
+		}
+		else if(heap[index] == null)
+		{
+			return false;
+		}
+		return true;
 	}
 }
