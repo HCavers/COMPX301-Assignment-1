@@ -52,4 +52,14 @@ public static int LineCount(String Path) throws IOException {
               return (NumList / HeapSize) + 1;
           }
       }
+
+    public static String[] CreateRun(int startIndex, int heapsize, String[] Lines){
+          String[] CurrRun = new String[heapsize];
+          int currIndex = 0;
+          while(Lines[currIndex] != null && currIndex < startIndex + heapsize){
+              CurrRun[currIndex] = Lines[startIndex + currIndex];
+              currIndex++;
+          }
+          return CurrRun;
+    }
 }
