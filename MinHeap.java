@@ -7,7 +7,7 @@ class MinHeap
 	public MinHeap(int arrayLength)
 	{
 		heap = new String[arrayLength];
-		heap[0] = Integer.toString(arrayLength - 1);
+		heap[0] = Integer.toString(0);
 	}
 	
 	// ** For testing purposes **
@@ -17,6 +17,11 @@ class MinHeap
 		{
 			System.out.println(heap[i]);
 		}
+	}
+	
+	public void ReserveSpace()
+	{
+		
 	}
 	
 	public void Push(String input)
@@ -39,10 +44,15 @@ class MinHeap
 		String result = heap[1];
 		return "";
 	}
+	
+	private int StartIndex()
+	{
+		return Integer.parseInt(heap[0]);
+	}
 
 	private int NextSpace()
 	{
-		for(int i = 1; i <= Integer.parseInt(heap[0]); i++)
+		for(int i = StartIndex(); i < heap.length; i++)
 		{
 			if(heap[i] == null)
 			{
@@ -80,7 +90,7 @@ class MinHeap
 		{
 			return;
 		}
-		else if(index == 1)
+		else if(index == StartIndex())
 		{
 			return;
 		}
