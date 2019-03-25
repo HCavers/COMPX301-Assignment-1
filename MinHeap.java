@@ -7,7 +7,7 @@ class MinHeap
 	public MinHeap(int arrayLength)
 	{
 		heap = new String[arrayLength];
-		heap[0] = "1";
+		heap[0] = Integer.toString(arrayLength - 1);
 	}
 	
 	// ** For testing purposes **
@@ -21,12 +21,14 @@ class MinHeap
 	
 	public void Push(String input)
 	{ // Uses up heap to keep sorted
-		int index = Integer.parseInt(heap[0]);
-		int newIndex = index++;
-		heap[0] = Integer.toString(newIndex);
-		if(newIndex < heap.length)
+		int index = NextSpace();
+		if(index > 0)
 		{
-			heap[newIndex] = input;
+			heap[index] = input;
+		}
+		else
+		{
+			throw new IndexOutOfBoundsException("Min heap is out of room");
 		}
 		UpHeap(index);
 	} 
@@ -36,7 +38,19 @@ class MinHeap
 		int index = Integer.parseInt(heap[0]);
 		String result = heap[1];
 		return "";
-	} 
+	}
+
+	private int NextSpace()
+	{
+		for(int i = 1; i <= Integer.parseInt(heap[0]); i++)
+		{
+			if(heap[i] == null)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
 	
 	private void DownHeap(int index)
 	{
@@ -94,7 +108,6 @@ class MinHeap
 	
 	private int GetMin(int index1, int index2)
 	{
-		System.out.println(index1);
 		String text1 = heap[index1];
 		String text2 = heap[index2];
 		int result = text1.compareTo(text2);
@@ -127,8 +140,6 @@ class MinHeap
 	{
 		int leftChild = GetLeftChild(index);
 		int rightChild = GetRightChild(index);
-		boolean left = ChildExist(leftChild);
-		boolean right = ChildExist(rightChild);
 		if(ChildExist(leftChild) || ChildExist(rightChild))
 		{
 			return false;
