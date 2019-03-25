@@ -7,7 +7,7 @@ class MinHeap
 	public MinHeap(int arrayLength)
 	{
 		heap = new String[arrayLength];
-		heap[0] = Integer.toString(0);
+		heap[0] = Integer.toString(arrayLength);
 	}
 	
 	// ** For testing purposes **
@@ -21,7 +21,16 @@ class MinHeap
 	
 	public void ReserveSpace()
 	{
-		
+		int reservedSpace = Integer.parseInt(heap[0]);
+		reservedSpace--;
+		heap[0] = Integer.toString(reservedSpace);
+		SwapValues(reservedSpace, 1);
+		DownHeap(1);
+	}
+	
+	public void Reset()
+	{
+		heap[0] = Integer.toString(heap.length);
 	}
 	
 	public void Push(String input)
@@ -45,14 +54,22 @@ class MinHeap
 		return "";
 	}
 	
-	private int StartIndex()
+	private void Heapify()
+	{
+		for(int i = 1; i < ReservedSpace(); i++)
+		{
+			DownHeap(i);
+		}
+	}
+	
+	private int ReservedSpace()
 	{
 		return Integer.parseInt(heap[0]);
 	}
 
 	private int NextSpace()
 	{
-		for(int i = StartIndex(); i < heap.length; i++)
+		for(int i = 1; i < ReservedSpace(); i++)
 		{
 			if(heap[i] == null)
 			{
@@ -66,6 +83,10 @@ class MinHeap
 	{
 		
 		if(IsLeaf(index))
+		{
+			return;
+		}
+		if(IsReserved(index))
 		{
 			return;
 		}
@@ -90,7 +111,7 @@ class MinHeap
 		{
 			return;
 		}
-		else if(index == StartIndex())
+		else if(index == 1)
 		{
 			return;
 		}
@@ -120,6 +141,14 @@ class MinHeap
 	{
 		String text1 = heap[index1];
 		String text2 = heap[index2];
+		if(text1 == null)
+		{
+			return index2;
+		}
+		else if (text2 == null)
+		{
+			return index1;
+		}
 		int result = text1.compareTo(text2);
 		if(result > 0)
 		{
@@ -160,9 +189,21 @@ class MinHeap
 		}
 	}
 	
+	private boolean IsReserved(int index)
+	{
+		if(index >= ReservedSpace())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	private boolean ChildExist(int index)
 	{
-		if(index > heap.length)
+		if(index >= ReservedSpace())
 		{
 			return false;
 		}
