@@ -68,4 +68,15 @@ public static int LineCount(String Path) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(output));
         bw.write(Arrays.toString(Run));
     }
+
+    public static void GenerateRuns(String filepath, int numRuns,int heapsize,String[] Lines)throws IOException{
+      int startIndex = 0;
+      int currRuns = 0;
+      File Output = new File(filepath);
+      while(currRuns < numRuns){
+          WriteRun(Output,startIndex,heapsize,Lines);
+          startIndex = startIndex + heapsize;
+          currRuns++;
+      }
+  }
 }
