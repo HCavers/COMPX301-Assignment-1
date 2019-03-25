@@ -14,4 +14,27 @@ public class MakeRuns {
     }
 
 
+
+
+public static int LineCount(String Path) throws IOException {
+       BufferedReader br = new BufferedReader(new FileReader(Path));
+       String currLine = br.readLine();
+       int i = 0;
+       while (currLine != null){
+           i++;
+           currLine = br.readLine();
+       }
+       br.close();
+       return i;
+   }
+
+   public static int NumRuns(int NumList, int HeapSize){
+          if(NumList % HeapSize == 0){
+              return NumList / HeapSize;
+          }
+
+          else{
+              return (NumList / HeapSize) + 1;
+          }
+      }
 }
