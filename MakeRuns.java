@@ -59,10 +59,14 @@ public class MakeRuns {
     public static String[] CreateRun(int startIndex, int heapsize, String[] Lines){
         String[] CurrRun = new String[heapsize];
         int currIndex = 0;
-        while(Lines[currIndex] != null && currIndex < startIndex + heapsize){
+        while(startIndex + currIndex < Lines.length && currIndex < heapsize){
             CurrRun[currIndex] = Lines[startIndex + currIndex];
+            //System.out.println("Currindex is: " + currIndex);
+            //System.out.println("startindex is: " +  startIndex);
             currIndex++;
         }
+        //System.out.println("Ended Run");
+        System.out.println(Arrays.toString(CurrRun));
         return CurrRun;
     }
 
@@ -77,6 +81,7 @@ public class MakeRuns {
         int currRuns = 0;
         File Output = new File(filepath);
         while(currRuns < numRuns){
+            //System.out.println("Writing Run");
             WriteRun(Output,startIndex,heapsize,Lines);
             startIndex = startIndex + heapsize;
             currRuns++;
