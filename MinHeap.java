@@ -31,6 +31,7 @@ class MinHeap
 	public void Reset()
 	{
 		heap[0] = Integer.toString(heap.length);
+		Heapify();
 	}
 	
 	public void Push(String input)
@@ -47,18 +48,19 @@ class MinHeap
 		UpHeap(index);
 	} 
 	
-	public String Pull()
+	public void replaceRoot(String input)
 	{ // Uses  down heap to keep sorted
-		int index = Integer.parseInt(heap[0]);
-		String result = heap[1];
-		return "";
+		heap[1] = input;
+		DownHeap(1);
 	}
 	
 	private void Heapify()
 	{
-		for(int i = 1; i < ReservedSpace(); i++)
+		for(int i = ReservedSpace() - 1; i > 1; i--)
 		{
-			DownHeap(i);
+			UpHeap(i);
+			Print();
+			System.out.println("------------");
 		}
 	}
 	
