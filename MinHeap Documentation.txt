@@ -1,0 +1,28 @@
+Constructor:
+
+	public MinHeap(int arrayLength)
+		Initializes a new array to length arrayLength and puts the length 
+		in element 0 of the array
+
+Methods:
+	
+	public String Next()
+		Returns the root value of the heap, if whole heap is blocked the 
+		returns null
+	
+	public void RemoveRoot()
+		Removes the root value of the heap
+	
+	public void Block()
+		Moves root to end of array behind the block shortening the length 
+		of the array by one
+	
+	public void Reset()
+		Resets block position to end of array and re heapifies the heap
+	
+	public void Push(String input)
+		Adds input to end of heap then sorts into priority order,
+		if there is no room left in array throws out of bounds exception
+	
+	public void ReplaceRoot(String input)
+		Replaces the root value with input then sorts into priority order

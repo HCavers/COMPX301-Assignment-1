@@ -41,7 +41,7 @@ class MinHeap
 		DownHeap(1);
 	}
 	
-	public void ReserveSpace()
+	public void Block()
 	{
 		int reservedSpace = Integer.parseInt(heap[0]);
 		reservedSpace--;
@@ -70,7 +70,7 @@ class MinHeap
 		UpHeap(index);
 	} 
 	
-	public void replaceRoot(String input)
+	public void ReplaceRoot(String input)
 	{ // Uses  down heap to keep sorted
 		heap[1] = input;
 		DownHeap(1);	
