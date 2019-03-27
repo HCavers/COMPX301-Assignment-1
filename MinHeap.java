@@ -51,16 +51,16 @@ class MinHeap
 	public void replaceRoot(String input)
 	{ // Uses  down heap to keep sorted
 		heap[1] = input;
-		DownHeap(1);
+		DownHeap(1);	
 	}
 	
 	private void Heapify()
 	{
-		for(int i = ReservedSpace() - 1; i > 1; i--)
+		for(int i = ReservedSpace() - 1; i > 0; i--)
 		{
-			UpHeap(i);
+			DownHeap(i);	
 			Print();
-			System.out.println("------------");
+			System.out.println("------------");			
 		}
 	}
 	
