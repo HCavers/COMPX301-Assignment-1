@@ -19,6 +19,28 @@ class MinHeap
 		}
 	}
 	
+	public String Next()
+	{
+		int blockIndex = Integer.parseInt(heap[0]);
+		if(blockIndex > 1)
+		{
+			return heap[1];
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
+	public void RemoveRoot()
+	{
+		int blockIndex = Integer.parseInt(heap[0]);
+		blockIndex--;
+		SwapValues(blockIndex, 1);
+		heap[blockIndex] = null;
+		DownHeap(1);
+	}
+	
 	public void ReserveSpace()
 	{
 		int reservedSpace = Integer.parseInt(heap[0]);
