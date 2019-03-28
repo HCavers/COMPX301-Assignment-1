@@ -16,7 +16,7 @@ public class MakeRuns {
         int NumLines = LineCount(filePath);
         String[] LineList= new String[NumLines];
 
-        BufferedReader br = new BufferedReader(new FileReader(filePath));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String currLine = br.readLine();
         int count = 0;
         while (currLine != null){
@@ -35,7 +35,7 @@ public class MakeRuns {
     }
 
     public static int LineCount(String Path) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(Path));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String currLine = br.readLine();
         int i = 0;
         while (currLine != null){
@@ -70,22 +70,24 @@ public class MakeRuns {
         return CurrRun;
     }
 
-    public static void WriteRun(File output, int startIndex, int heapsize, String[] Lines)  throws IOException{
+    public static void WriteRun(BufferedWriter bw, int startIndex, int heapsize, String[] Lines)  throws IOException{
         String[] Run = CreateRun(startIndex,heapsize,Lines);
-        BufferedWriter bw = new BufferedWriter(new FileWriter(output));
         bw.write(Arrays.toString(Run));
+
     }
 
     public static void GenerateRuns(String filepath, int numRuns,int heapsize,String[] Lines)throws IOException{
         int startIndex = 0;
         int currRuns = 0;
         File Output = new File(filepath);
+        BufferedWriter bw = new BufferedWriter(new FileWriter(Output));
         while(currRuns < numRuns){
             //System.out.println("Writing Run");
-            WriteRun(Output,startIndex,heapsize,Lines);
+            WriteRun(bw,startIndex,heapsize,Lines);
             startIndex = startIndex + heapsize;
             currRuns++;
         }
+        bw.close();
     }
 
 }
