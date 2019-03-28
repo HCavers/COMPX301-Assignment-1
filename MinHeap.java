@@ -9,7 +9,7 @@ class MinHeap
 		heap = new String[arrayLength];
 		heap[0] = Integer.toString(arrayLength);
 	}
-	
+
 	// ** For testing purposes **
 	public void Print()
 	{
@@ -18,7 +18,7 @@ class MinHeap
 			System.out.println(heap[i]);
 		}
 	}
-	
+
 	public String Next()
 	{
 		int blockIndex = Integer.parseInt(heap[0]);
@@ -31,7 +31,7 @@ class MinHeap
 			return null;
 		}
 	}
-	
+
 	public void RemoveRoot()
 	{
 		int blockIndex = Integer.parseInt(heap[0]);
@@ -40,7 +40,7 @@ class MinHeap
 		heap[blockIndex] = null;
 		DownHeap(1);
 	}
-	
+
 	public void Block()
 	{
 		int reservedSpace = Integer.parseInt(heap[0]);
@@ -49,13 +49,13 @@ class MinHeap
 		SwapValues(reservedSpace, 1);
 		DownHeap(1);
 	}
-	
+
 	public void Reset()
 	{
 		heap[0] = Integer.toString(heap.length);
 		Heapify();
 	}
-	
+
 	public void Push(String input)
 	{ // Uses up heap to keep sorted
 		int index = NextSpace();
@@ -68,25 +68,25 @@ class MinHeap
 			throw new IndexOutOfBoundsException("Min heap is out of room");
 		}
 		UpHeap(index);
-	} 
-	
+	}
+
 	public void ReplaceRoot(String input)
 	{ // Uses  down heap to keep sorted
 		heap[1] = input;
-		DownHeap(1);	
+		DownHeap(1);
 	}
-	
+
 	private void Heapify()
 	{
 		for(int i = ReservedSpace() - 1; i > 0; i--)
 		{
-			DownHeap(i);	
+			DownHeap(i);
 			Print();
-			System.out.println("------------");			
+			System.out.println("------------");
 		}
 	}
-	
-	private int ReservedSpace()
+
+	public int ReservedSpace()
 	{
 		return Integer.parseInt(heap[0]);
 	}
@@ -102,10 +102,10 @@ class MinHeap
 		}
 		return -1;
 	}
-	
+
 	private void DownHeap(int index)
 	{
-		
+
 		if(IsLeaf(index))
 		{
 			return;
@@ -126,7 +126,7 @@ class MinHeap
 			DownHeap(smallestChild);
 		}
 	}
-	
+
 	private void UpHeap(int index)
 	{
 		int parentID = GetParent(index);
@@ -145,22 +145,22 @@ class MinHeap
 			UpHeap(parentID);
 		}
 	}
-	
+
 	private int GetLeftChild(int parentID)
 	{
 		return parentID * 2;
 	}
-	
+
 	private int GetRightChild(int parentID)
 	{
 		return (parentID * 2) + 1;
 	}
-	
+
 	private int GetParent(int childID)
 	{
 		return childID / 2;
 	}
-	
+
 	private int GetMin(int index1, int index2)
 	{
 		String text1 = heap[index1];
@@ -183,14 +183,14 @@ class MinHeap
 			return index1;
 		}
 	}
-	
+
 	private void SwapValues(int index1, int index2)
 	{
 		String temp = heap[index1];
 		heap[index1] = heap[index2];
 		heap[index2] = temp;
 	}
-	
+
 	private int GetSmallestChild(int index)
 	{
 		int leftChild = GetLeftChild(index);
@@ -198,7 +198,7 @@ class MinHeap
 		int smallestChild = GetMin(leftChild, rightChild);
 		return smallestChild;
 	}
-	
+
 	private boolean IsLeaf(int index)
 	{
 		int leftChild = GetLeftChild(index);
@@ -212,7 +212,7 @@ class MinHeap
 			return true;
 		}
 	}
-	
+
 	private boolean IsReserved(int index)
 	{
 		if(index >= ReservedSpace())
@@ -224,7 +224,7 @@ class MinHeap
 			return false;
 		}
 	}
-	
+
 	private boolean ChildExist(int index)
 	{
 		if(index >= ReservedSpace())
