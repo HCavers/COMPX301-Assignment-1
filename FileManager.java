@@ -14,6 +14,7 @@ class FileManager
 	public FileManager(int id, boolean outputMode) throws IOException
 	{
 		_id = id;
+		_numRuns = 0;
 		_fileName = DEFAULT_NAME + Integer.toString(id);
 		File file = new File(_fileName);
 		if(file.exists())
@@ -31,10 +32,23 @@ class FileManager
 		}
 	}
 	
+	public int getNumRuns()
+	{
+		return _numRuns;
+	}
+	
 	public void writeLine(String input) throws IOException
 	{
 		if(_output != null)
 		{
+			if(input.length() == 1)
+			{
+				int value = (int)input.charAt(0);
+				if(value == 29)
+				{
+					_numRuns++;
+				}
+			}
 			_output.writeLine(input);
 		}
 	}
