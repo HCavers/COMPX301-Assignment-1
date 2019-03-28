@@ -13,23 +13,36 @@ public class MakeRuns {
         String filePath = args[1];
 
         System.out.println(args[1]);
-        int NumLines = LineCount(filePath);
-        String[] LineList= new String[NumLines];
+        //int NumLines = LineCount(filePath);
+        //String[] LineList= new String[NumLines];
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String currLine = br.readLine();
-        int count = 0;
-        while (currLine != null){
-            LineList[count] = currLine;
-            count++;
-            currLine = br.readLine();
+        MinHeap PriorityQ = new MinHeap(size);
+        PriorityQ.Print();
+        while(br.readLine() != null){
+            while(PriorityQ.Next()!= null){ // phase 1 - Filling up minheap
+                PriorityQ.Push(br.readLine()); // Should add input from standard in and loop until no more space available in minheap
+            }
+            PriorityQ.Print(); // For testing
+            // Todo: Phase 2 -> Emptying minheap
         }
-        int TotalRuns = NumRuns(NumLines,size);
-        System.out.println(TotalRuns);
-        System.out.println(Arrays.toString(LineList)); // For Testing
-        String OutputFilePath = filePath.substring(0, filePath.lastIndexOf("\\")) + "\\" + "Output.txt";
-        System.out.println(OutputFilePath);
-        GenerateRuns(OutputFilePath,TotalRuns,size,LineList);
+
+        br.close();
+
+        //Old Code , will remove once current code works
+        //String currLine = br.readLine();
+        //int count = 0;
+        //while (currLine != null){
+        //    LineList[count] = currLine;
+        //    count++;
+        //    currLine = br.readLine();
+        //}
+        //int TotalRuns = NumRuns(NumLines,size);
+        //System.out.println(TotalRuns);
+        //System.out.println(Arrays.toString(LineList)); // For Testing
+        //String OutputFilePath = filePath.substring(0, filePath.lastIndexOf("\\")) + "\\" + "Output.txt";
+        //System.out.println(OutputFilePath);
+        //GenerateRuns(OutputFilePath,TotalRuns,size,LineList);
 
 
     }
