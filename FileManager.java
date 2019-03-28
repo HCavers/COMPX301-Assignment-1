@@ -10,11 +10,13 @@ class FileManager
 	private int _numRuns;
 	private FileInput _input;
 	private FileOutput _output;
+	private boolean _lock;
 	
 	public FileManager(int id, boolean outputMode) throws IOException
 	{
 		_id = id;
 		_numRuns = 0;
+		_lock = false;
 		_fileName = DEFAULT_NAME + Integer.toString(id);
 		File file = new File(_fileName);
 		if(file.exists())
@@ -35,6 +37,16 @@ class FileManager
 	public int getNumRuns()
 	{
 		return _numRuns;
+	}
+	
+	public void lock()
+	{
+		_lock = true;
+	}
+	
+	public void unlock()
+	{
+		_lock = false;
 	}
 	
 	public void writeLine(String input) throws IOException
@@ -69,9 +81,24 @@ class FileManager
 	{
 		if(_input != null)
 		{
+			if(_lock == true)
+			{
+				return null;
+			}
 			if(_input.hasNext())
 			{
-				return _input.Next();
+				String next = _input.Next();
+				if(next.length() == 1)
+				{
+					int value = (int)next.charAt(0);
+					if(value == 29)
+					{
+						_numRuns--;
+						lock();
+						return null;
+					}
+				}
+				return next;
 			}
 			else
 			{
