@@ -19,6 +19,7 @@ public class MakeRuns {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         MinHeap PriorityQ = new MinHeap(size);
         PriorityQ.Print();
+		File file = new File(Output.txt)
         while(br.readLine() != null){
             for(int i = 1; i < size ; i++){ // phase 1 -> Fill up the heap
                 PriorityQ.Push(br.readLine());
