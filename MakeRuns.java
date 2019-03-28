@@ -20,31 +20,58 @@ public class MakeRuns {
         MinHeap PriorityQ = new MinHeap(size);
         PriorityQ.Print();
         while(br.readLine() != null){
-            while(PriorityQ.Next()!= null){ // phase 1 - Filling up minheap
-                PriorityQ.Push(br.readLine()); // Should add input from standard in and loop until no more space available in minheap
+            for(int i = 1; i < size ; i++){ // phase 1 -> Fill up the heap
+                PriorityQ.Push(br.readLine());
             }
             PriorityQ.Print(); // For testing
-            // Todo: Phase 2 -> Emptying minheap
+            String lastOutput = PriorityQ.Next();
+            // Write to output
+            while(PriorityQ.Next() != null){ // While the heap is not empty
+                if(IsGreater(PriorityQ.Next(),lastOutput)){ // if the next item is larger than last output
+                    // Write to output
+                }
+                else{
+                    PriorityQ.Block();
+                }
+
+                if(PriorityQ.ReservedSpace() == 1){
+                    // min heap is blocked -> Write seperator character to output
+                    PriorityQ.Reset();
+                }
+            }
         }
 
         br.close();
 
-        //Old Code , will remove once current code works
+
+        // Old Code
         //String currLine = br.readLine();
         //int count = 0;
-        //while (currLine != null){
-        //    LineList[count] = currLine;
-        //    count++;
-        //    currLine = br.readLine();
-        //}
-        //int TotalRuns = NumRuns(NumLines,size);
-        //System.out.println(TotalRuns);
-        //System.out.println(Arrays.toString(LineList)); // For Testing
-        //String OutputFilePath = filePath.substring(0, filePath.lastIndexOf("\\")) + "\\" + "Output.txt";
-        //System.out.println(OutputFilePath);
-        //GenerateRuns(OutputFilePath,TotalRuns,size,LineList);
+       // while (currLine != null){
+       //     LineList[count] = currLine;
+       //     count++;
+       //     currLine = br.readLine();
+       //}
+       // int TotalRuns = NumRuns(NumLines,size);
+       // System.out.println(TotalRuns);
+       // System.out.println(Arrays.toString(LineList)); // For Testing
+       // String OutputFilePath = filePath.substring(0, filePath.lastIndexOf("\\")) + "\\" + "Output.txt";
+       // System.out.println(OutputFilePath);
+       // GenerateRuns(OutputFilePath,TotalRuns,size,LineList);
 
 
+    }
+
+    public static boolean IsLower (String First, String Second){ // Returns true if first is lower than second
+        if(First.compareTo(Second) > 0){
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean IsGreater (String First, String Second){
+        return IsLower(Second, First);
     }
 
     public static int LineCount(String Path) throws IOException {
