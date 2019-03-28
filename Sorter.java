@@ -37,13 +37,17 @@ class Sorter
 	{
 		String[] nextValues = new String[list.size()];
 		fillNextValues(nextValues);
-		while(listNotEmpty(nextValues))
+		while(!endCondition())
 		{
-			int smallestValue = getSmallestValue(nextValues);
-			writeToFile(nextValues[smallestValue]);
-			System.out.println(nextValues[smallestValue]);
-			nextValues[smallestValue] = list.get(smallestValue).getNext();
-		}	
+			while(listNotEmpty(nextValues))
+			{
+				int smallestValue = getSmallestValue(nextValues);
+				writeToFile(nextValues[smallestValue]);
+				System.out.println(nextValues[smallestValue]);
+				nextValues[smallestValue] = list.get(smallestValue).getNext();
+			}	
+			
+		}
 		//for(int i = 0; i < list.size(); i++)
 		//{
 			//list.get(i).close();
@@ -58,6 +62,26 @@ class Sorter
 			{
 				nextValues[i] = list.get(i).getNext();
 			}
+		}
+	}
+	
+	private boolean endCondition()
+	{
+		int fileCount = 0;
+		for(FileManager fm : list)
+		{
+			if(fm.getNumRuns() != 0)
+			{
+				fileCount++;
+			}
+		}
+		if(fileCount > 1)
+		{
+			return false
+		}
+		else
+		{
+			return true;
 		}
 	}
 	
