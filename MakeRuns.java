@@ -10,42 +10,51 @@ public class MakeRuns {
         }
 
         int size = Integer.parseInt(args[0]);
-        //File Input = new File (args[1]);
+        File Input = new File (args[1]);
 
         System.out.println(args[1]);
         //int NumLines = LineCount(filePath);
         //String[] LineList= new String[NumLines];
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        //BufferedReader br = new BufferedReader(new FileReader(Input));
+        //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new FileReader(Input));
         MinHeap PriorityQ = new MinHeap(size);
         String Line = br.readLine();
-        PriorityQ.Print();
+        System.out.println(Line);
+        PriorityQ.Push(Line);
+        //PriorityQ.Print();
         File Output = new File("Output.txt");
         BufferedWriter bw = new BufferedWriter(new FileWriter(Output));
         while(Line != null){
-            for(int i = 1; i < size ; i++){ // phase 1 -> Fill up the heap
-                PriorityQ.Push(Line);
+            for(int i = 2; i < size ; i++){ // phase 1 -> Fill up the heap
                 Line = br.readLine();
-                PriorityQ.Print(); // For testing
+                System.out.println(Line);
+                PriorityQ.Push(Line);
+
+
             }
             System.out.println("Heap is filled up");
+            PriorityQ.Print(); // For testing
             String lastOutput = PriorityQ.Next();
-            bw.write(lastOutput);
-            bw.newLine();
+          //  bw.write(lastOutput);
+          //  bw.newLine();
             // Write to output
             while(PriorityQ.Next() != null){ // While the heap is not empty
                 if(IsGreater(PriorityQ.Next(),lastOutput)){ // if the next item is larger than last output
                     // Write to output
-                    System.out.println("Is Greater");
+                    //System.out.println("Is Greater");
+                    //System.out.println(PriorityQ.Next());
                     bw.write(PriorityQ.Next());
                     bw.newLine();
                     lastOutput = PriorityQ.Next();
                     Line = br.readLine();
                     if(Line != null){
-                        PriorityQ.ReplaceRoot(Line);
+                       PriorityQ.ReplaceRoot(Line);
                     }
-                    //PriorityQ.RemoveRoot();
+                    else{
+                        PriorityQ.RemoveRoot();
+                    }
+
 
                 }
                 else{
@@ -55,14 +64,25 @@ public class MakeRuns {
 
                 if(PriorityQ.ReservedSpace() == 1){
                     // min heap is blocked -> Write seperator character to output
-                    bw.write(Character.toString((char)29));
+                    // bw.write(Character.toString((char)29));
+                    bw.write("END OF RUN");
                     bw.newLine();
                     //bw.write("End OF RUN");
                     System.out.println("Reset");
                     PriorityQ.Reset();
                 }
             }
-            System.out.println("Heap is filled up");
+            System.out.println("Finished Run");
+        }
+        if(PriorityQ.ReservedSpace() < size){
+            bw.write(Character.toString((char)29));
+            //bw.write("END OF RUN");
+            bw.newLine();
+            PriorityQ.Reset();
+            while(PriorityQ.Next() != null){
+                bw.write(PriorityQ.Next());
+                PriorityQ.RemoveRoot();
+            }
         }
         bw.close();
         br.close();
