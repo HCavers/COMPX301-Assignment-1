@@ -37,21 +37,112 @@ class Sorter
 	{
 		String[] nextValues = new String[list.size()];
 		fillNextValues(nextValues);
-		while(!endCondition())
+		while(true)
 		{
-			while(listNotEmpty(nextValues))
+			mergeRun(nextValues);
+			System.out.println(emptyFiles());
+			System.out.println(outputId);
+			try
 			{
-				int smallestValue = getSmallestValue(nextValues);
-				writeToFile(nextValues[smallestValue]);
-				System.out.println(nextValues[smallestValue]);
-				nextValues[smallestValue] = list.get(smallestValue).getNext();
-			}	
-			
+				Thread.sleep(2000);
+			}
+			catch(InterruptedException ie)
+			{
+				ie.printStackTrace();
+			}
+			if(emptyFiles() == (list.size() - 1))
+			{
+				// print non empty file
+				// close all files
+				// break out of loop
+				break;
+			}
+			else if(emptyFiles() > 1)
+			{
+				// Redistribute runs
+			}
+			else if(emptyFiles() == 1)
+			{
+				int emptyFile = getEmptyFile();
+				list.get(outputId).swap();
+				list.get(emptyFile).swap();
+				outputId = emptyFile;
+				unlockFiles();
+				fillNextValues(nextValues);
+			}
 		}
-		//for(int i = 0; i < list.size(); i++)
-		//{
-			//list.get(i).close();
-		//}
+	}
+	
+	private void mergeRun(String[] input) throws IOException
+	{
+		while(inputNotEmpty(input))
+		{
+			int smallestValue = getSmallestValue(input);
+			writeToFile(input[smallestValue]);
+			input[smallestValue] = null;
+			if(list.get(smallestValue).hasNext())
+			{
+				input[smallestValue] = list.get(smallestValue).getNext();
+			}
+		}
+		writeToFile(Character.toString((char)29));
+	}
+	
+	private void unlockFiles()
+	{
+		for(int i = 0; i < list.size(); i++)
+		{
+			list.get(i).unlock();
+		}
+	}
+	
+	private int getEmptyFile()
+	{
+		for(int i = 0; i < list.size(); i++)
+		{
+			if(fileEmpty(list.get(i)))
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	private int emptyFiles()
+	{
+		int count = 0;
+		for(int i = 0; i < list.size(); i++)
+		{
+			if(fileEmpty(list.get(i)))
+			{
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	private boolean fileEmpty(FileManager file)
+	{
+		if(file.getNumRuns() == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	private boolean inputNotEmpty(String[] input)
+	{
+		for(int i = 0; i < input.length; i++)
+		{
+			if(input[i] != null)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private void fillNextValues(String[] nextValues) throws IOException
@@ -65,37 +156,19 @@ class Sorter
 		}
 	}
 	
-	private boolean endCondition()
+	private int getNextOutputFile()
 	{
-		int fileCount = 0;
-		for(FileManager fm : list)
+		for(int i = 0; i < list.size(); i++)
 		{
-			if(fm.getNumRuns() != 0)
+			if(list.get(i).getNumRuns() == 0)
 			{
-				fileCount++;
+				return i;
 			}
 		}
-		if(fileCount > 1)
-		{
-			return false
-		}
-		else
-		{
-			return true;
-		}
+		return -1;
 	}
 	
-	private boolean listNotEmpty(String[] nextValues)
-	{
-		for(int i = 0; i < nextValues.length; i++)
-		{
-			if(nextValues[i] != null)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+	
 	
 	private int getSmallestValue(String[] nextValues)
 	{
