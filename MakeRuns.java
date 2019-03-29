@@ -5,60 +5,75 @@ public class MakeRuns {
 
     public static void main(String[] args) throws IOException {
         if (args.length != 2){
-            System.out.println("Usage: java MakeRun [minheapsize] [textfilepath]");
+            System.out.println("Usage: java MakeRun [minheapsize] [textfile]");
             System.exit(0);
         }
 
         int size = Integer.parseInt(args[0]);
-        String filePath = args[1];
+        //File Input = new File (args[1]);
 
         System.out.println(args[1]);
         //int NumLines = LineCount(filePath);
         //String[] LineList= new String[NumLines];
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        //BufferedReader br = new BufferedReader(new FileReader(Input));
         MinHeap PriorityQ = new MinHeap(size);
+        String Line = br.readLine();
         PriorityQ.Print();
-		File file = new File(Output.txt)
-        while(br.readLine() != null){
+        File Output = new File("Output.txt");
+        BufferedWriter bw = new BufferedWriter(new FileWriter(Output));
+        while(Line != null){
             for(int i = 1; i < size ; i++){ // phase 1 -> Fill up the heap
-                PriorityQ.Push(br.readLine());
+                PriorityQ.Push(Line);
+                Line = br.readLine();
+                PriorityQ.Print(); // For testing
             }
-            PriorityQ.Print(); // For testing
+            System.out.println("Heap is filled up");
             String lastOutput = PriorityQ.Next();
+            bw.write(lastOutput);
             // Write to output
             while(PriorityQ.Next() != null){ // While the heap is not empty
                 if(IsGreater(PriorityQ.Next(),lastOutput)){ // if the next item is larger than last output
                     // Write to output
+                    System.out.println("Is Greater");
+                    bw.write(PriorityQ.Next());
+                    lastOutput = PriorityQ.Next();
+                    PriorityQ.RemoveRoot();
                 }
                 else{
+                    System.out.println("Block");
                     PriorityQ.Block();
                 }
 
                 if(PriorityQ.ReservedSpace() == 1){
                     // min heap is blocked -> Write seperator character to output
+                    bw.write(Character.toString((char)29));
+                    //bw.write("End OF RUN");
+                    System.out.println("Reset");
                     PriorityQ.Reset();
                 }
             }
+            System.out.println("Heap is filled up");
         }
-
+        bw.close();
         br.close();
 
 
         // Old Code
         //String currLine = br.readLine();
         //int count = 0;
-       // while (currLine != null){
-       //     LineList[count] = currLine;
-       //     count++;
-       //     currLine = br.readLine();
-       //}
-       // int TotalRuns = NumRuns(NumLines,size);
-       // System.out.println(TotalRuns);
-       // System.out.println(Arrays.toString(LineList)); // For Testing
-       // String OutputFilePath = filePath.substring(0, filePath.lastIndexOf("\\")) + "\\" + "Output.txt";
-       // System.out.println(OutputFilePath);
-       // GenerateRuns(OutputFilePath,TotalRuns,size,LineList);
+        // while (currLine != null){
+        //     LineList[count] = currLine;
+        //     count++;
+        //     currLine = br.readLine();
+        //}
+        // int TotalRuns = NumRuns(NumLines,size);
+        // System.out.println(TotalRuns);
+        // System.out.println(Arrays.toString(LineList)); // For Testing
+        // String OutputFilePath = filePath.substring(0, filePath.lastIndexOf("\\")) + "\\" + "Output.txt";
+        // System.out.println(OutputFilePath);
+        // GenerateRuns(OutputFilePath,TotalRuns,size,LineList);
 
 
     }
@@ -129,6 +144,7 @@ public class MakeRuns {
             currRuns++;
         }
         bw.close();
+
     }
 
 }
