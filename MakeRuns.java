@@ -32,12 +32,14 @@ public class MakeRuns {
             System.out.println("Heap is filled up");
             String lastOutput = PriorityQ.Next();
             bw.write(lastOutput);
+			bw.newLine();
             // Write to output
             while(PriorityQ.Next() != null){ // While the heap is not empty
                 if(IsGreater(PriorityQ.Next(),lastOutput)){ // if the next item is larger than last output
                     // Write to output
                     System.out.println("Is Greater");
                     bw.write(PriorityQ.Next());
+					bw.newLine();
                     lastOutput = PriorityQ.Next();
                     PriorityQ.RemoveRoot();
                 }
@@ -49,6 +51,7 @@ public class MakeRuns {
                 if(PriorityQ.ReservedSpace() == 1){
                     // min heap is blocked -> Write seperator character to output
                     bw.write(Character.toString((char)29));
+					bw.newLine();
                     //bw.write("End OF RUN");
                     System.out.println("Reset");
                     PriorityQ.Reset();
