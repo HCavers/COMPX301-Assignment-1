@@ -34,6 +34,22 @@ class FileManager
 		}
 	}
 	
+	public void print() throws IOException
+	{
+		if(!(readable()))
+		{
+			swap();
+		}
+		while(_input.hasNext())
+		{
+			String line = _input.Next();
+			if(!(line.equals(Character.toString((char)29))))
+			{
+				System.out.println(line);
+			}
+		}
+	}
+	
 	public int getNumRuns()
 	{
 		return _numRuns;

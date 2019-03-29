@@ -40,20 +40,13 @@ class Sorter
 		while(true)
 		{
 			mergeRun(nextValues);
-			System.out.println(emptyFiles());
-			System.out.println(outputId);
-			try
-			{
-				Thread.sleep(2000);
-			}
-			catch(InterruptedException ie)
-			{
-				ie.printStackTrace();
-			}
 			if(emptyFiles() == (list.size() - 1))
 			{
 				// print non empty file
+				int nonEmptyFile = getNonEmptyFile();
+				list.get(nonEmptyFile).print();
 				// close all files
+				closeFiles();
 				// break out of loop
 				break;
 			}
@@ -86,6 +79,26 @@ class Sorter
 			}
 		}
 		writeToFile(Character.toString((char)29));
+	}
+	
+	private int getNonEmptyFile()
+	{
+		for(int i = 0; i < list.size(); i++)
+		{
+			if(list.get(i).getNumRuns() != 0)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	private void closeFiles() throws IOException
+	{
+		for(int i = 0; i < list.size(); i++)
+		{
+			list.get(i).close();
+		}
 	}
 	
 	private void unlockFiles()
