@@ -88,7 +88,7 @@ public class MakeRuns {
         return true;
     }
 
-    public static boolean IsGreater (String First, String Second){
+    public static boolean IsGreater (String First, String Second){ // Returns true if first is greater than second
         return IsLower(Second, First);
     }
 }
