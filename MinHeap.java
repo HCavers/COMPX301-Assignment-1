@@ -81,8 +81,6 @@ class MinHeap
 		for(int i = ReservedSpace() - 1; i > 0; i--)
 		{
 			DownHeap(i);
-			Print();
-			System.out.println("------------");
 		}
 	}
 
@@ -193,9 +191,19 @@ class MinHeap
 
 	private int GetSmallestChild(int index)
 	{
-		int leftChild = GetLeftChild(index);
-		int rightChild = GetRightChild(index);
-		int smallestChild = GetMin(leftChild, rightChild);
+		if(IsLeaf(index)){
+		    return -1;
+        }
+        int leftChild = GetLeftChild(index);
+        int rightChild = GetRightChild(index);
+        if(!(ChildExist(leftChild))){
+            return rightChild;
+        }
+        else if(!(ChildExist(rightChild))){
+            return leftChild;
+        }
+
+        int smallestChild = GetMin(leftChild, rightChild);
 		return smallestChild;
 	}
 
