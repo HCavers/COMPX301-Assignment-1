@@ -3,76 +3,81 @@ import java.util.Arrays;
 
 public class MakeRuns {
 
-    public static void main(String[] args) throws IOException {
-        if (args.length != 2){
-            System.out.println("Usage: java MakeRun [minheapsize] [textfile]");
-            System.exit(0);
-        }
-
-        int size = Integer.parseInt(args[0]);
-        File Input = new File (args[1]);
-        int numRuns = 1;
-        boolean isfirstrun = true;
-
-        //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedReader br = new BufferedReader(new FileReader(Input));
-        MinHeap PriorityQ = new MinHeap(size);
-        String Line = "";
-        File Output = new File("Output.txt");
-        BufferedWriter bw = new BufferedWriter(new FileWriter(Output));
-        while(Line != null){
-            for(int i = 1; i < size ; i++){ // phase 1 -> Fill up the heap
-                Line = br.readLine();
-                PriorityQ.Push(Line);
+    public static void main(String[] args) {
+        try {
+            if (args.length != 1) {
+                System.out.println("Usage: java MakeRun [minheapsize]"); // Checks if the user entered a size for the minheap as the only argument and if not prints a usage statement
+                System.exit(0);
             }
-            String lastOutput = PriorityQ.Next();
-            while(PriorityQ.Next() != null){ // While the heap is not empty
-                if(IsGreater(PriorityQ.Next(),lastOutput)){ // if the next item is larger than last output
-                    if(isfirstrun){
-                        isfirstrun = false;
-                    }
-                    else{
-                        bw.newLine();
-                    }
 
-                    bw.write(PriorityQ.Next());
-                    lastOutput = PriorityQ.Next();
+            int size = Integer.parseInt(args[0]);
+            int numRuns = 1;
+            boolean isfirstrun = true;
+            String Line = "";
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            MinHeap PriorityQ = new MinHeap(size);
+            File Output = new File("Output.txt");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(Output));
+            
+            while (Line != null) {
+                for (int i = 1; i < size; i++) { // phase 1 -> Fill up the heap
                     Line = br.readLine();
-                    if(Line != null){
-                        PriorityQ.ReplaceRoot(Line);
-                    }
-                    else{
-                        PriorityQ.RemoveRoot();
-                    }
+                    PriorityQ.Push(Line);
                 }
-                else{
-                    PriorityQ.Block();
-                }
+                String lastOutput = PriorityQ.Next();
+                while (PriorityQ.Next() != null) { // While the heap is not empty
+                    if (IsGreater(PriorityQ.Next(), lastOutput)) { // if the next item is larger than last output
+                        if (isfirstrun) {
+                            isfirstrun = false;
+                        } else {
+                            bw.newLine();
+                        }
 
-                if(PriorityQ.ReservedSpace() == 1){
-                    numRuns++;
-                    bw.newLine();
-                    bw.write(Character.toString((char)29));
-                    PriorityQ.Reset();
-                    lastOutput = PriorityQ.Next();
+                        bw.write(PriorityQ.Next());
+                        lastOutput = PriorityQ.Next();
+                        Line = br.readLine();
+                        if (Line != null) {
+                            PriorityQ.ReplaceRoot(Line);
+                        } else {
+                            PriorityQ.RemoveRoot();
+                        }
+                    } else {
+                        PriorityQ.Block();
+                    }
+
+                    if (PriorityQ.ReservedSpace() == 1) {
+                        numRuns++;
+                        bw.newLine();
+                        bw.write(Character.toString((char) 29));
+                        PriorityQ.Reset();
+                        lastOutput = PriorityQ.Next();
+                    }
                 }
             }
-        }
-        if(PriorityQ.ReservedSpace() < size){
-            numRuns++;
-            bw.newLine();
-            bw.write(Character.toString((char)29));
-            PriorityQ.Reset();
-            while(PriorityQ.Next() != null){
+            if (PriorityQ.ReservedSpace() < size) {
+                numRuns++;
                 bw.newLine();
-                bw.write(PriorityQ.Next());
-                PriorityQ.RemoveRoot();
+                bw.write(Character.toString((char) 29));
+                PriorityQ.Reset();
+                while (PriorityQ.Next() != null) {
+                    bw.newLine();
+                    bw.write(PriorityQ.Next());
+                    PriorityQ.RemoveRoot();
+                }
             }
+            System.out.println(numRuns);
+            System.out.println(Output);
+            bw.close();
+            br.close();
         }
-        System.out.println(numRuns);
-        System.out.println(Output);
-        bw.close();
-        br.close();
+        catch(IOException iex){
+            System.out.println(iex.getMessage());
+        }
+
+        catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     public static boolean IsLower (String First, String Second){ // Returns true if first is lower than second
