@@ -47,6 +47,7 @@ public class MakeRuns {
                     bw.write(Character.toString((char)29));
                     bw.newLine();
                     PriorityQ.Reset();
+                    lastOutput = PriorityQ.Next();
                 }
             }
         }
