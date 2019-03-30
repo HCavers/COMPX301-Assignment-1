@@ -1,6 +1,12 @@
+// Hunter Cavers (1288108)
+// Sivaram Manoharan (1299026)
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
+// This class was made to be used by the file manager class to 
+// handle reading input from a file
 
 class FileInput
 {
@@ -13,6 +19,7 @@ class FileInput
 		nextInput = reader.readLine();
 	}
 	
+	// Returns whether the file still has input or not
 	public boolean hasNext()
 	{
 		if(nextInput == null)
@@ -25,6 +32,7 @@ class FileInput
 		}
 	}
 	
+	// Returns the next input from the file
 	public String Next() throws IOException
 	{
 		String result = nextInput;
@@ -32,6 +40,7 @@ class FileInput
 		return result;
 	}
 	
+	// Closes the reader to the file
 	public void close() throws IOException
 	{
 		reader.close();
