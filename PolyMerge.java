@@ -1,9 +1,6 @@
 // Hunter Cavers (1288108)
 // Sivaram Manoharan (1299026)
 
-// Hunter Cavers (1288108)
-// Sivaram Manoharan (1299026)
-
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
