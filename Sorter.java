@@ -69,13 +69,13 @@ class Sorter
 			}
 			else if(emptyFiles() == 0)
 			{
-				fillNextValues(nextValues);
 				unlockFiles();
+				fillNextValues(nextValues);
 			}
 		}
 	}
 	
-	private void mergeRun(String[] input) throws IOException
+	public void mergeRun(String[] input) throws IOException
 	{
 		while(inputNotEmpty(input))
 		{
