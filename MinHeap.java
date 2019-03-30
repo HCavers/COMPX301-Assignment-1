@@ -23,7 +23,7 @@ class MinHeap
 		}
 	}
 
-	public void RemoveRoot() // Removes the current root
+	public void RemoveRoot() // Removes the current root and uses down heap to keep priority order
 	{
 		int blockIndex = Integer.parseInt(heap[0]);
 		blockIndex--;
@@ -48,7 +48,7 @@ class MinHeap
 	}
 
 	public void Push(String input) // Adds an element to the end of heap then upheaps to keep in priority order
-	{ // Uses up heap to keep sorted
+	{ 
 		int index = NextSpace();
 		if(index > 0)
 		{
@@ -61,8 +61,8 @@ class MinHeap
 		UpHeap(index);
 	}
 
-	public void ReplaceRoot(String input) // Replaces the root with the input
-	{ // Uses  down heap to keep sorted
+	public void ReplaceRoot(String input) // Replaces the root with the input then uses down heap to keep priority order
+	{ 
 		heap[1] = input;
 		DownHeap(1);
 	}
@@ -95,30 +95,30 @@ class MinHeap
 	private void DownHeap(int index) // Downheaps the list
 	{
 
-		if(IsLeaf(index))
+		if(IsLeaf(index))		// if current element is a leaf do nothing
 		{
 			return;
 		}
-		if(IsReserved(index))
+		if(IsReserved(index))	// if current element is in the reserved block do nothing
 		{
 			return;
 		}
-		int smallestChild = GetSmallestChild(index);
-		int minID = GetMin(index, smallestChild);
+		int smallestChild = GetSmallestChild(index);	// Get the smallest child
+		int minID = GetMin(index, smallestChild);		// Check if child is smaller than parentID
 		if(minID == index)
 		{
-			return;
+			return;										// If parent is smaller then do nothing
 		}
 		else
 		{
-			SwapValues(index, smallestChild);
-			DownHeap(smallestChild);
+			SwapValues(index, smallestChild);			// If child is smaller than parent swap and call down heap to keep priority order
+			DownHeap(smallestChild);					
 		}
 	}
 
 	private void UpHeap(int index) // Upheaps the list
 	{
-		int parentID = GetParent(index);
+		int parentID = GetParent(index);		// Check if smaller than parent
 		int minID = GetMin(index, parentID);
 		if(minID == parentID)
 		{
@@ -130,27 +130,27 @@ class MinHeap
 		}
 		else
 		{
-			SwapValues(index, parentID);
+			SwapValues(index, parentID);		// If smaller swap
 			UpHeap(parentID);
 		}
 	}
 
-	private int GetLeftChild(int parentID)
+	private int GetLeftChild(int parentID) // Return index of left child 
 	{
 		return parentID * 2;
 	}
 
-	private int GetRightChild(int parentID)
+	private int GetRightChild(int parentID) // Returns index of right child
 	{
 		return (parentID * 2) + 1;
 	}
 
-	private int GetParent(int childID)
+	private int GetParent(int childID) // Returns index of parent
 	{
 		return childID / 2;
 	}
 
-	private int GetMin(int index1, int index2)
+	private int GetMin(int index1, int index2) // Returns index of smaller value
 	{
 		String text1 = heap[index1];
 		String text2 = heap[index2];
@@ -173,32 +173,32 @@ class MinHeap
 		}
 	}
 
-	private void SwapValues(int index1, int index2)
+	private void SwapValues(int index1, int index2) // Swaps the values of 2 positions in the heap
 	{
 		String temp = heap[index1];
 		heap[index1] = heap[index2];
 		heap[index2] = temp;
 	}
 
-	private int GetSmallestChild(int index)
+	private int GetSmallestChild(int index) // Returns index of the smallest child 
 	{
-		if(IsLeaf(index)){
+		if(IsLeaf(index)){ // if leaf return invalid value
 		    return -1;
         }
-        int leftChild = GetLeftChild(index);
+        int leftChild = GetLeftChild(index);	// Get both children
         int rightChild = GetRightChild(index);
-        if(!(ChildExist(leftChild))){
+        if(!(ChildExist(leftChild))){			// If left child doesn't exist return right child
             return rightChild;
         }
-        else if(!(ChildExist(rightChild))){
+        else if(!(ChildExist(rightChild))){		// If right child doesn't exist return left child
             return leftChild;
         }
 
-        int smallestChild = GetMin(leftChild, rightChild);
+        int smallestChild = GetMin(leftChild, rightChild);		// Otherwise return smallest child
 		return smallestChild;
 	}
 
-	private boolean IsLeaf(int index)
+	private boolean IsLeaf(int index) // returns if element is a leaf 
 	{
 		int leftChild = GetLeftChild(index);
 		int rightChild = GetRightChild(index);
@@ -212,7 +212,7 @@ class MinHeap
 		}
 	}
 
-	private boolean IsReserved(int index)
+	private boolean IsReserved(int index) // returns if element is reserved or not
 	{
 		if(index >= ReservedSpace())
 		{
@@ -224,7 +224,7 @@ class MinHeap
 		}
 	}
 
-	private boolean ChildExist(int index)
+	private boolean ChildExist(int index) // returns if a element exists
 	{
 		if(index >= ReservedSpace())
 		{
