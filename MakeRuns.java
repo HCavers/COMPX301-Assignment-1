@@ -12,6 +12,7 @@ public class MakeRuns {
         int size = Integer.parseInt(args[0]);
         File Input = new File (args[1]);
         int numRuns = 1;
+        boolean isfirstrun = true;
 
         //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedReader br = new BufferedReader(new FileReader(Input));
@@ -27,12 +28,18 @@ public class MakeRuns {
             String lastOutput = PriorityQ.Next();
             while(PriorityQ.Next() != null){ // While the heap is not empty
                 if(IsGreater(PriorityQ.Next(),lastOutput)){ // if the next item is larger than last output
+                    if(isfirstrun){
+                        isfirstrun = false;
+                    }
+                    else{
+                        bw.newLine();
+                    }
+
                     bw.write(PriorityQ.Next());
-                    bw.newLine();
                     lastOutput = PriorityQ.Next();
                     Line = br.readLine();
                     if(Line != null){
-                       PriorityQ.ReplaceRoot(Line);
+                        PriorityQ.ReplaceRoot(Line);
                     }
                     else{
                         PriorityQ.RemoveRoot();
@@ -44,8 +51,8 @@ public class MakeRuns {
 
                 if(PriorityQ.ReservedSpace() == 1){
                     numRuns++;
-                    bw.write(Character.toString((char)29));
                     bw.newLine();
+                    bw.write(Character.toString((char)29));
                     PriorityQ.Reset();
                     lastOutput = PriorityQ.Next();
                 }
@@ -53,10 +60,11 @@ public class MakeRuns {
         }
         if(PriorityQ.ReservedSpace() < size){
             numRuns++;
-            bw.write(Character.toString((char)29));
             bw.newLine();
+            bw.write(Character.toString((char)29));
             PriorityQ.Reset();
             while(PriorityQ.Next() != null){
+                bw.newLine();
                 bw.write(PriorityQ.Next());
                 PriorityQ.RemoveRoot();
             }
