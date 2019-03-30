@@ -7,7 +7,7 @@ class Sorter
 	private List<FileManager> list;
 	private int outputId;
 	
-	public Sorter(int[] distribution, String fileName) throws IOException
+	public Sorter(int[] distribution, String fileName, int numRuns) throws IOException
 	{
 		list = new ArrayList<>();
 		FileInput inputFile = new FileInput(fileName);
@@ -26,6 +26,11 @@ class Sorter
 				{
 					break;
 				}
+			}
+			if(file.getNumRuns() < distribution[i])
+			{
+				int dummyRuns = distribution[i] - file.getNumRuns();
+				addDummyRuns(file, dummyRuns);
 			}
 			file.swap();
 			list.add(file);
@@ -52,7 +57,6 @@ class Sorter
 			}
 			else if(emptyFiles() > 1)
 			{
-				// Redistribute runs
 			}
 			else if(emptyFiles() == 1)
 			{
@@ -62,6 +66,11 @@ class Sorter
 				outputId = emptyFile;
 				unlockFiles();
 				fillNextValues(nextValues);
+			}
+			else if(emptyFiles() == 0)
+			{
+				fillNextValues(nextValues);
+				unlockFiles();
 			}
 		}
 	}
@@ -217,6 +226,14 @@ class Sorter
 		else
 		{
 			return index1;
+		}
+	}
+	
+	private void addDummyRuns(FileManager file, int numRuns) throws IOException
+	{
+		for(int i = 0; i < numRuns; i++)
+		{
+			file.writeLine(Character.toString((char)29));
 		}
 	}
 	

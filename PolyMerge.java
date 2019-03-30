@@ -1,18 +1,34 @@
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 class PolyMerge
 {
 	public static void main(String[] args)
 	{
-		int fileNum = 5;
-		int runNum = 47;
-		int[] dis = getDistrubution(fileNum, runNum);
-		printDis(dis);
-	}
-	
-	private static void printDis(int[] distribution)
-	{
-		for(int i = 0; i < distribution.length; i++)
+		try
 		{
-			System.out.println(distribution[i]);
+			if(args.length != 1)
+			{
+				System.out.println("Usage: java PolyMerge <number of files>");
+				System.exit(0);
+			}
+			
+			int numFiles = Integer.parseInt(args[0]);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			int numRuns = Integer.parseInt(reader.readLine());
+			String fileName = reader.readLine();
+			int[] distribution = getDistrubution(numFiles, numRuns);
+			Sorter sorter = new Sorter(distribution, fileName, numRuns);
+			sorter.sort();
+		}
+		catch (IOException iex)
+		{
+			System.out.println(iex.getMessage());
+		}
+		catch (Exception ex)
+		{
+			System.out.println("Error: " + ex.getMessage());
 		}
 	}
 	
