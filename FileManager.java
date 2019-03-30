@@ -131,6 +131,7 @@ class FileManager
 			if(_input.hasNext())
 			{
 				// If input is group separator then decrease then number of runs by one
+				// and lock file from being read further
 				String next = _input.Next();
 				if(next.length() == 1)
 				{
