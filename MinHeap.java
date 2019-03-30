@@ -10,16 +10,7 @@ class MinHeap
 		heap[0] = Integer.toString(arrayLength);
 	}
 
-	// ** For testing purposes **
-	public void Print()
-	{
-		for(int i = 0; i < heap.length; i++)
-		{
-			System.out.println(heap[i]);
-		}
-	}
-
-	public String Next()
+	public String Next() // Returns the next element to read
 	{
 		int blockIndex = Integer.parseInt(heap[0]);
 		if(blockIndex > 1)
@@ -32,7 +23,7 @@ class MinHeap
 		}
 	}
 
-	public void RemoveRoot()
+	public void RemoveRoot() // Removes the current root
 	{
 		int blockIndex = Integer.parseInt(heap[0]);
 		blockIndex--;
@@ -41,7 +32,7 @@ class MinHeap
 		DownHeap(1);
 	}
 
-	public void Block()
+	public void Block() // Moves the value from root to the end of the heap and shortens the available space of the heap
 	{
 		int reservedSpace = Integer.parseInt(heap[0]);
 		reservedSpace--;
@@ -50,13 +41,13 @@ class MinHeap
 		DownHeap(1);
 	}
 
-	public void Reset()
+	public void Reset() // Clears all blocked space and sorts the data into heap order
 	{
 		heap[0] = Integer.toString(heap.length);
 		Heapify();
 	}
 
-	public void Push(String input)
+	public void Push(String input) // Adds an element to the end of heap then upheaps to keep in priority order
 	{ // Uses up heap to keep sorted
 		int index = NextSpace();
 		if(index > 0)
@@ -70,13 +61,13 @@ class MinHeap
 		UpHeap(index);
 	}
 
-	public void ReplaceRoot(String input)
+	public void ReplaceRoot(String input) // Replaces the root with the input
 	{ // Uses  down heap to keep sorted
 		heap[1] = input;
 		DownHeap(1);
 	}
 
-	private void Heapify()
+	private void Heapify() // Sorts the list into heap order
 	{
 		for(int i = ReservedSpace() - 1; i > 0; i--)
 		{
@@ -87,9 +78,9 @@ class MinHeap
 	public int ReservedSpace()
 	{
 		return Integer.parseInt(heap[0]);
-	}
+	} // Returns the amount of available space
 
-	private int NextSpace()
+	private int NextSpace() // Returns the index of the last space
 	{
 		for(int i = 1; i < ReservedSpace(); i++)
 		{
@@ -101,7 +92,7 @@ class MinHeap
 		return -1;
 	}
 
-	private void DownHeap(int index)
+	private void DownHeap(int index) // Downheaps the list
 	{
 
 		if(IsLeaf(index))
@@ -125,7 +116,7 @@ class MinHeap
 		}
 	}
 
-	private void UpHeap(int index)
+	private void UpHeap(int index) // Upheaps the list
 	{
 		int parentID = GetParent(index);
 		int minID = GetMin(index, parentID);
